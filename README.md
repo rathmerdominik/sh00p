@@ -16,7 +16,7 @@ This is even more consistent than a docker based setup.
 
 First clone the repository  
 ```
-https://github.com/rathmerdominik/sh00p
+git clone https://github.com/rathmerdominik/sh00p
 cd sh00p
 ```
 
@@ -50,7 +50,7 @@ php bin/console doctrine:mi:mi
 ```
 Want some product test data? I have written a command in `src/Command/GenerateTestDataCommand.php` that will generate some test data for you.  
 ``````
-sh00p:generate-products 20 # will generate 20 products
+php bin/console sh00p:generate-products 20 # will generate 20 products
 ``````
 
 And thats it!  
@@ -86,6 +86,11 @@ To execute the existing tests run the following command
 php bin/phpunit tests
 ```
 
+If you like to see the current coverage you can run the following command
+```
+php bin/phpunit --coverage-text tests/
+```
+
 <h1 align="center">Code style and Static Type checking</h1>
 
 This project uses PHP-CS-Fixer for the code-style.
@@ -115,7 +120,7 @@ This example assumes that you have generated test products with the command ```s
 ```
 Creates a customer
 
-Now can create a cart for the customer by issuing a POST request to `http://localhost:8000/api/v1/customers/1/carts`  
+Now we can create a cart for the customer by issuing a POST request to `http://localhost:8000/api/v1/customers/1/carts`  
 ```json
 {
   "name": "Test cart for all my super fancy tech stuff plus a typo here hehe"
