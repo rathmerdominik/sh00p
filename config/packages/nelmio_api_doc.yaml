@@ -1,0 +1,10 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Sh00p
+            description: A REST API to showcase clean and proper code for a shopping cart
+            version: 1.0.0
+    areas: # to filter documented areas
+        path_patterns: # an array of regexps (document only routes under /api, except /api/doc)
+            - ^/api/v1(?!/doc$)
+
