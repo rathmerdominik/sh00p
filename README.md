@@ -147,5 +147,12 @@ Better fix it by issuing a PATCH request to `http://localhost:8000/api/v1/custom
 All done!  
 Got myself some brandnew products!
 
+<h1 align="center">What is left to do?</h1>
+
+- Add better error handling as currently we just pass the exception to the user
+- Add a github actions workflow to automatically run the tests and the code-style checks
+- Add a github actions workflow to automatically deploy the project to a server
+- Add a program to have some kind of production test
+- Write Integration tests
 
 
