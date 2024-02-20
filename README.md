@@ -154,5 +154,6 @@ Got myself some brandnew products!
 - Add a github actions workflow to automatically deploy the project to a server
 - Add a program to have some kind of production test
 - Write Integration tests
+- Consider using "match" everywhere
 
 
