@@ -41,7 +41,7 @@ class CartProductService
             ->first();
 
         if(!$cartProduct) {
-            return 'Product in cart not found';
+            return ErrorMessage::PRODUCT_IN_CART_NOT_FOUND;
         }
         return $cartProduct;
     }
@@ -55,7 +55,7 @@ class CartProductService
 
         $product = $this->productRepository->find($cartProductDTO->product_id);
         if (!$product) {
-            return 'Product not found';
+            return ErrorMessage::PRODUCT_NOT_FOUND;
         }
 
         $cartProduct = new CartProduct();
@@ -107,9 +107,9 @@ class CartProductService
     private function verifyAmountInRange(int $amount, int $stock): string|null
     {
         if ($amount < 1) {
-            return 'Amount must be greater than 0';
+            return ErrorMessage::AMOUNT_EQUAL_OR_LOWER_THAN_ZERO;
         } elseif ($amount > $stock) {
-            return 'Amount must be less than stock';
+            return ErrorMessage::AMOUNT_GREATER_THAN_STOCK;
         }
         return null;
     }

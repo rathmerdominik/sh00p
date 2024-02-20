@@ -28,7 +28,7 @@ class CustomerService
     {
         $customer = $this->customerRepository->find($customer_id);
         if (!$customer) {
-            return 'Customer not found';
+            return ErrorMessage::CUSTOMER_NOT_FOUND;
         }
         return $customer;
     }
@@ -51,7 +51,7 @@ class CustomerService
         $customer = $this->entityManager->getRepository(Customer::class)->find($customer_id);
 
         if(!$customer) {
-            return 'Customer not found';
+            return ErrorMessage::CUSTOMER_NOT_FOUND;
         }
 
         $customer->setName($customerDTO->name);
@@ -64,7 +64,7 @@ class CustomerService
         $customer = $this->entityManager->getRepository(Customer::class)->find($customer_id);
 
         if (!$customer) {
-            return 'Customer not found';
+            return ErrorMessage::CUSTOMER_NOT_FOUND;
         }
 
         $this->entityManager->remove($customer);

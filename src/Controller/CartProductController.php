@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Model\CartProductDTO;
 use App\Service\CartProductService;
 use App\Service\EntitySerializerService;
+use App\Service\ErrorMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,10 +52,14 @@ class CartProductController extends AbstractController
         int $cart_id,
     ): JsonResponse {
         $cartProduct = $this->cartProductService->addCartProductToCart($customer_id, $cart_id, $cartProductDTO);
-        if(is_string($cartProduct)) {
-            return new JsonResponse(['error' => $cartProduct], Response::HTTP_NOT_FOUND);
+        try {
+            return match ($cartProduct) {
+                ErrorMessage::AMOUNT_EQUAL_OR_LOWER_THAN_ZERO, ErrorMessage::AMOUNT_GREATER_THAN_STOCK => new JsonResponse(['error' => $cartProduct], Response::HTTP_BAD_REQUEST),
+                ErrorMessage::PRODUCT_NOT_FOUND, ErrorMessage::PRODUCT_IN_CART_NOT_FOUND, ErrorMessage::CART_NOT_FOUND => new JsonResponse(['error' => $cartProduct], Response::HTTP_NOT_FOUND),
+            };
+        } catch (\UnhandledMatchError) {
+            return new JsonResponse($this->entitySerializerService->serializeEntity($cartProduct), Response::HTTP_CREATED, json: true);
         }
-        return new JsonResponse($this->entitySerializerService->serializeEntity($cartProduct), Response::HTTP_CREATED, json: true);
     }
 
     #[Route('/{cart_product_id}', name: 'app_cart_products_edit', methods: ['PATCH'], format: 'json')]
@@ -65,10 +70,14 @@ class CartProductController extends AbstractController
         int $cart_product_id
     ): JsonResponse {
         $cartProduct = $this->cartProductService->editCartProduct($customer_id, $cart_id, $cart_product_id, $customerDto);
-        if (is_string($cartProduct)) {
-            return new JsonResponse(['error' => $cartProduct], Response::HTTP_NOT_FOUND);
+        try {
+            return match ($cartProduct) {
+                ErrorMessage::AMOUNT_EQUAL_OR_LOWER_THAN_ZERO, ErrorMessage::AMOUNT_GREATER_THAN_STOCK => new JsonResponse(['error' => $cartProduct], Response::HTTP_BAD_REQUEST),
+                ErrorMessage::PRODUCT_NOT_FOUND, ErrorMessage::PRODUCT_IN_CART_NOT_FOUND, ErrorMessage::CART_NOT_FOUND => new JsonResponse(['error' => $cartProduct], Response::HTTP_NOT_FOUND),
+            };
+        } catch (\UnhandledMatchError) {
+            return new JsonResponse($this->entitySerializerService->serializeEntity($cartProduct), Response::HTTP_CREATED, json: true);
         }
-        return new JsonResponse($this->entitySerializerService->serializeEntity($cartProduct), Response::HTTP_CREATED, json: true);
     }
 
     #[Route('/{cart_product_id}', name: 'app_cart_products_delete', methods: ['DELETE'], format: 'json')]

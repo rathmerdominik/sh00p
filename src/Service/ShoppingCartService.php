@@ -34,8 +34,8 @@ class ShoppingCartService
     public function getShoppingCartById(int $customer_id, int $cart_id): ShoppingCart|string
     {
         $cart = $this->shoppingCartRepository->find($cart_id);
-        if($cart === null || $cart->getCustomer()->getId() != $customer_id) {
-            return 'Cart not found';
+        if(is_null($cart) || $cart->getCustomer()->getId() != $customer_id) {
+            return ErrorMessage::CART_NOT_FOUND;
         }
 
         return $cart;
@@ -62,8 +62,8 @@ class ShoppingCartService
     public function editShoppingCart(int $customer_id, int $cart_id, CartDTO $cartDTO): ShoppingCart|string
     {
         $cart = $this->shoppingCartRepository->find($cart_id);
-        if($cart === null || $cart->getCustomer()->getId() != $customer_id) {
-            return 'Cart not found';
+        if(is_null($cart) || $cart->getCustomer()->getId() != $customer_id) {
+            return ErrorMessage::CART_NOT_FOUND;
         }
 
         $cart->setName($cartDTO->name);
@@ -75,8 +75,8 @@ class ShoppingCartService
     public function deleteShoppingCart(int $customer_id, int $cart_id): null|string
     {
         $cart = $this->shoppingCartRepository->find($cart_id);
-        if($cart === null || $cart->getCustomer()->getId() != $customer_id) {
-            return 'Cart not found';
+        if(is_null($cart) || $cart->getCustomer()->getId() != $customer_id) {
+            return ErrorMessage::CART_NOT_FOUND;
         }
 
         $this->entityManager->remove($cart);
