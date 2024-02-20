@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CartProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 /**
  * @codeCoverageIgnore
@@ -25,6 +26,7 @@ class CartProduct
 
     #[ORM\ManyToOne(inversedBy: 'cartProducts')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?ShoppingCart $shoppingCart = null;
 
     public function getId(): ?int
