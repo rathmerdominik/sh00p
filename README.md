@@ -108,7 +108,7 @@ php vendor/bin/phpstan analyse
 <hr>
 <h1 align="center">Usage</h1>
 
-Here is a little examples how a full workflow could look like.  
+Here is a little example how a full workflow could look like.  
 This example assumes that you have generated test products with the command ```sh00p:generate-products 20```
 
 ### Create a customer
@@ -145,7 +145,7 @@ Better fix it by issuing a PATCH request to `http://localhost:8000/api/v1/custom
 ```
 
 All done!  
-Got myself some brandnew products!
+Got myself some brand new products!
 
 <h1 align="center">What is left to do?</h1>
 
@@ -154,6 +154,3 @@ Got myself some brandnew products!
 - Add a github actions workflow to automatically deploy the project to a server
 - Add a program to have some kind of production test
 - Write Integration tests
-- Consider using "match" everywhere
-
-
